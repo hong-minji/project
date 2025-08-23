@@ -98,12 +98,12 @@ class WorkshopTimer {
     }
 
     loadSounds() {
-        // MP3 파일을 사용한 오디오 객체 생성
+        // 같은 폴더의 MP3 파일들을 사용한 오디오 객체 생성
         this.sounds = {
-            cat: new Audio('고양이.mp3'),
-            dog: new Audio('강아지.mp3'),
-            clap: new Audio('박수.mp3'),
-            wow: new Audio('와우.mp3')
+            cat: new Audio('./cat.mp3'),
+            dog: new Audio('./dog.mp3'),
+            clap: new Audio('./clap.mp3'),
+            wow: new Audio('./wow.mp3')
         };
 
         // 각 오디오의 볼륨 설정
