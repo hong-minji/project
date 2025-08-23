@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>워크숍 도우미</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 좌측 패널: 타이머와 컨트롤 -->
+        <div class="left-panel">
+            <div class="header">
+                <h1>워크숍 도우미</h1>
+                <div class="main-timer">
+                    <div class="timer-circle" id="mainTimerCircle">
+                        <div class="timer-display" id="mainTimer">2:00:00</div>
+                        <div class="timer-label">전체 진행시간</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="session-controls">
+                <h2>세션 관리</h2>
+                <div class="session-list">
+                    <div class="session-item active" data-session="opening" data-duration="1200">
+                        <span class="session-name">오프닝</span>
+                        <span class="session-duration">20분</span>
+                    </div>
+                    <div class="session-item" data-session="swot" data-duration="1800">
+                        <span class="session-name">나의 SWOT 분석</span>
+                        <span class="session-duration">30분</span>
+                    </div>
+                    <div class="session-item" data-session="action" data-duration="1200">
+                        <span class="session-name">액션 플랜 도출</span>
+                        <span class="session-duration">20분</span>
+                    </div>
+                    <div class="session-item" data-session="discussion" data-duration="1800">
+                        <span class="session-name">카드 토론</span>
+                        <span class="session-duration">30분</span>
+                    </div>
+                    <div class="session-item" data-session="closing" data-duration="600">
+                        <span class="session-name">마무리</span>
+                        <span class="session-duration">10분</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="current-session">
+                <h3 id="currentSessionName">오프닝</h3>
+                <div class="session-timer">
+                    <div class="timer-circle small" id="sessionTimerCircle">
+                        <div class="timer-display" id="sessionTimer">20:00</div>
+                    </div>
+                </div>
+                <div class="session-controls-buttons">
+                    <button id="startSession" class="btn primary">시작</button>
+                    <button id="pauseSession" class="btn secondary">일시정지</button>
+                    <button id="resetSession" class="btn secondary">리셋</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 우측 패널: 발언자 타이머와 반응 버튼 -->
+        <div class="right-panel">
+            <div class="speaker-timer-section">
+                <h2>발언자 타이머</h2>
+                <div class="speaker-timer">
+                    <div class="timer-circle medium" id="speakerTimerCircle">
+                        <div class="timer-display" id="speakerTimer">3:00</div>
+                    </div>
+                    <div class="speaker-alerts">
+                        <div class="alert-indicator" id="catAlert">🐱 2분</div>
+                        <div class="alert-indicator" id="dogAlert">🐶 3분</div>
+                    </div>
+                </div>
+                <div class="speaker-controls">
+                    <button id="startSpeaker" class="btn primary">발언 시작</button>
+                    <button id="stopSpeaker" class="btn secondary">발언 종료</button>
+                </div>
+            </div>
+
+            <div class="reaction-section">
+                <h2>반응 버튼</h2>
+                <div class="reaction-buttons">
+                    <button class="reaction-btn" data-sound="cat">
+                        <span class="emoji">🐱</span>
+                        <span class="label">고양이</span>
+                    </button>
+                    <button class="reaction-btn" data-sound="dog">
+                        <span class="emoji">🐶</span>
+                        <span class="label">강아지</span>
+                    </button>
+                    <button class="reaction-btn" data-sound="clap">
+                        <span class="emoji">👏</span>
+                        <span class="label">박수</span>
+                    </button>
+                    <button class="reaction-btn" data-sound="wow">
+                        <span class="emoji">😮</span>
+                        <span class="label">와우</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="session-details">
+                <h3>현재 세션 세부사항</h3>
+                <div id="sessionDetails" class="session-description">
+                    <p><strong>자기소개 및 아이스브레이킹:</strong> 15분</p>
+                    <p><strong>목적 소개:</strong> 5분</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

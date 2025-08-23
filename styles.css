@@ -1,0 +1,390 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background-color: #000;
+    color: #fff;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.app-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* 좌측 패널 */
+.left-panel {
+    width: 50%;
+    padding: 2rem;
+    border-right: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+/* 타이머 원형 디자인 */
+.timer-circle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: conic-gradient(#fff 0deg, #333 0deg);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.timer-circle::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    background: #000;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.timer-circle .timer-display,
+.timer-circle .timer-label {
+    position: relative;
+    z-index: 2;
+}
+
+.main-timer .timer-circle {
+    width: 200px;
+    height: 200px;
+}
+
+.main-timer .timer-display {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.main-timer .timer-label {
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+.timer-circle.small {
+    width: 120px;
+    height: 120px;
+}
+
+.timer-circle.small .timer-display {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.timer-circle.medium {
+    width: 150px;
+    height: 150px;
+}
+
+.timer-circle.medium .timer-display {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+/* 세션 관리 */
+.session-controls {
+    margin-bottom: 2rem;
+}
+
+.session-controls h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.session-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.session-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.session-item:hover {
+    background: #222;
+    border-color: #555;
+}
+
+.session-item.active {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+}
+
+.session-name {
+    font-weight: 500;
+}
+
+.session-duration {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* 현재 세션 */
+.current-session {
+    text-align: center;
+}
+
+.current-session h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.session-timer {
+    margin-bottom: 1.5rem;
+}
+
+.session-controls-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+/* 우측 패널 */
+.right-panel {
+    width: 50%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    overflow-y: auto;
+}
+
+/* 발언자 타이머 */
+.speaker-timer-section {
+    text-align: center;
+}
+
+.speaker-timer-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.speaker-timer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.speaker-alerts {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.alert-indicator {
+    padding: 0.5rem 1rem;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.alert-indicator.active {
+    background: #fff;
+    color: #000;
+    opacity: 1;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.speaker-controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+/* 반응 버튼 */
+.reaction-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.reaction-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.reaction-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    background: #111;
+    border: 2px solid #333;
+    border-radius: 12px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.reaction-btn:hover {
+    background: #222;
+    border-color: #555;
+    transform: translateY(-2px);
+}
+
+.reaction-btn:active {
+    transform: translateY(0) scale(0.95);
+}
+
+.reaction-btn .emoji {
+    font-size: 2rem;
+}
+
+.reaction-btn .label {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* 세션 세부사항 */
+.session-details h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.session-description {
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 1.5rem;
+    line-height: 1.6;
+}
+
+.session-description p {
+    margin-bottom: 0.5rem;
+}
+
+.session-description p:last-child {
+    margin-bottom: 0;
+}
+
+/* 버튼 스타일 */
+.btn {
+    padding: 0.8rem 1.5rem;
+    border: 2px solid;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn.primary {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+}
+
+.btn.primary:hover {
+    background: #f0f0f0;
+}
+
+.btn.primary:active {
+    transform: scale(0.95);
+}
+
+.btn.secondary {
+    background: transparent;
+    color: #fff;
+    border-color: #333;
+}
+
+.btn.secondary:hover {
+    background: #333;
+    border-color: #555;
+}
+
+.btn.secondary:active {
+    transform: scale(0.95);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* 반응형 조정 */
+@media (max-width: 1200px) {
+    .left-panel, .right-panel {
+        padding: 1.5rem;
+    }
+    
+    .header h1 {
+        font-size: 2rem;
+    }
+    
+    .main-timer .timer-circle {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .timer-circle.medium {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .reaction-buttons {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+    }
+    
+    .reaction-btn {
+        padding: 1rem;
+    }
+    
+    .reaction-btn .emoji {
+        font-size: 1.5rem;
+    }
+}
