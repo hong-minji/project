@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Test - 찌익(Choice)</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', sans-serif;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #2a2a2a;
+            border-radius: 8px;
+        }
+        .section h2 {
+            margin-bottom: 15px;
+            color: #4a7c59;
+        }
+        .asset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .asset-item {
+            padding: 10px;
+            background: #333;
+            border-radius: 4px;
+        }
+        .asset-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 5px;
+        }
+        .asset-item video {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 5px;
+        }
+        .status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+        .status.ok {
+            background: #27ae60;
+            color: white;
+        }
+        .status.error {
+            background: #e74c3c;
+            color: white;
+        }
+        button {
+            padding: 8px 16px;
+            margin: 5px;
+            background: #4a7c59;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #3a6249;
+        }
+        .audio-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .audio-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: #333;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎮 찌익(Choice) - Asset Connection Test</h1>
+
+    <div class="section">
+        <h2>📊 Summary</h2>
+        <div id="summary">Loading...</div>
+    </div>
+
+    <div class="section">
+        <h2>🖼️ Background Images (5)</h2>
+        <div class="asset-grid" id="backgrounds"></div>
+    </div>
+
+    <div class="section">
+        <h2>🐭 Character Images (4)</h2>
+        <div class="asset-grid" id="characters"></div>
+    </div>
+
+    <div class="section">
+        <h2>🎬 Videos (2)</h2>
+        <div class="asset-grid" id="videos"></div>
+    </div>
+
+    <div class="section">
+        <h2>🎵 Audio Files (10)</h2>
+        <div class="audio-list" id="audio"></div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script>
+        let stats = {
+            total: 0,
+            loaded: 0,
+            failed: 0
+        };
+
+        function updateSummary() {
+            const summary = document.getElementById('summary');
+            summary.innerHTML = `
+                <p><strong>Total Assets:</strong> ${stats.total}</p>
+                <p><strong>Loaded:</strong> <span class="status ok">${stats.loaded}</span></p>
+                <p><strong>Failed:</strong> <span class="status error">${stats.failed}</span></p>
+                <p><strong>Success Rate:</strong> ${stats.total > 0 ? ((stats.loaded / stats.total) * 100).toFixed(1) : 0}%</p>
+            `;
+        }
+
+        function testImage(src, name, container) {
+            stats.total++;
+            const item = document.createElement('div');
+            item.className = 'asset-item';
+
+            const img = new Image();
+            img.onload = () => {
+                stats.loaded++;
+                item.innerHTML = `
+                    <img src="${src}" alt="${name}">
+                    <div>${name} <span class="status ok">✓</span></div>
+                `;
+                updateSummary();
+            };
+            img.onerror = () => {
+                stats.failed++;
+                item.innerHTML = `
+                    <div>${name} <span class="status error">✗</span></div>
+                    <small style="color: #e74c3c;">Failed to load: ${src}</small>
+                `;
+                updateSummary();
+            };
+            img.src = src;
+
+            container.appendChild(item);
+        }
+
+        function testVideo(src, name, container) {
+            stats.total++;
+            const item = document.createElement('div');
+            item.className = 'asset-item';
+
+            const video = document.createElement('video');
+            video.controls = true;
+            video.onloadeddata = () => {
+                stats.loaded++;
+                item.innerHTML = `
+                    <video src="${src}" controls style="width: 100%;"></video>
+                    <div>${name} <span class="status ok">✓</span></div>
+                `;
+                updateSummary();
+            };
+            video.onerror = () => {
+                stats.failed++;
+                item.innerHTML = `
+                    <div>${name} <span class="status error">✗</span></div>
+                    <small style="color: #e74c3c;">Failed to load: ${src}</small>
+                `;
+                updateSummary();
+            };
+            video.src = src;
+
+            container.appendChild(item);
+        }
+
+        function testAudio(src, name, container) {
+            stats.total++;
+            const item = document.createElement('div');
+            item.className = 'audio-item';
+
+            const audio = new Audio();
+            audio.oncanplaythrough = () => {
+                stats.loaded++;
+                item.innerHTML = `
+                    <button onclick="document.getElementById('audio_${name}').play()">▶️</button>
+                    <div style="flex: 1;">${name} <span class="status ok">✓</span></div>
+                    <audio id="audio_${name}" src="${src}"></audio>
+                `;
+                updateSummary();
+            };
+            audio.onerror = () => {
+                stats.failed++;
+                item.innerHTML = `
+                    <div>${name} <span class="status error">✗</span></div>
+                    <small style="color: #e74c3c;">Failed to load: ${src}</small>
+                `;
+                updateSummary();
+            };
+            audio.src = src;
+
+            container.appendChild(item);
+        }
+
+        // Test all assets
+        const backgroundsContainer = document.getElementById('backgrounds');
+        const charactersContainer = document.getElementById('characters');
+        const videosContainer = document.getElementById('videos');
+        const audioContainer = document.getElementById('audio');
+
+        // Backgrounds
+        Object.entries(CONFIG.ASSETS.backgrounds).forEach(([key, src]) => {
+            testImage(src, key, backgroundsContainer);
+        });
+
+        // Characters
+        Object.entries(CONFIG.ASSETS.characters).forEach(([key, src]) => {
+            testImage(src, key, charactersContainer);
+        });
+
+        // Videos
+        Object.entries(CONFIG.ASSETS.videos).forEach(([key, src]) => {
+            testVideo(src, key, videosContainer);
+        });
+
+        // Audio
+        Object.entries(CONFIG.ASSETS.bgm).forEach(([key, src]) => {
+            testAudio(src, `BGM: ${key}`, audioContainer);
+        });
+        Object.entries(CONFIG.ASSETS.sfx).forEach(([key, src]) => {
+            testAudio(src, `SFX: ${key}`, audioContainer);
+        });
+
+        updateSummary();
+    </script>
+</body>
+</html>
