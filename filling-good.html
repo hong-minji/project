@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>필링굿 (Filling Good) - MVP 발표자료</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR", "Segoe UI", sans-serif;
+            background: linear-gradient(135deg, #FF9E44 0%, #FFCD56 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            scroll-snap-align: start;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background: white;
+            border-radius: 24px;
+            padding: 60px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            font-size: 64px;
+            font-weight: 700;
+            color: #FF9E44;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 48px;
+            font-weight: 700;
+            color: #FF9E44;
+            margin-bottom: 32px;
+            border-bottom: 4px solid #FFCD56;
+            padding-bottom: 16px;
+        }
+
+        h3 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #333;
+            margin: 32px 0 16px 0;
+        }
+
+        p {
+            font-size: 24px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 16px;
+        }
+
+        .subtitle {
+            font-size: 32px;
+            color: #666;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .tagline {
+            font-size: 28px;
+            color: #FF9E44;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #FF9E44, #FFCD56);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #FFF5E6, #FFFBF0);
+            padding: 32px;
+            border-radius: 16px;
+            border-left: 6px solid #FF9E44;
+        }
+
+        .feature-card h4 {
+            font-size: 28px;
+            color: #FF9E44;
+            margin-bottom: 16px;
+        }
+
+        .feature-card p {
+            font-size: 20px;
+            color: #666;
+        }
+
+        .emoji {
+            font-size: 64px;
+            text-align: center;
+            margin: 24px 0;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #FF9E44, #FFCD56);
+            color: white;
+            padding: 32px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 20px;
+            opacity: 0.9;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin: 32px 0;
+        }
+
+        .comparison-item {
+            padding: 24px;
+            border-radius: 16px;
+        }
+
+        .before {
+            background: #FFE5E5;
+            border-left: 6px solid #FF6B6B;
+        }
+
+        .after {
+            background: #E6F7E6;
+            border-left: 6px solid #51CF66;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            font-size: 24px;
+            padding: 12px 0;
+            padding-left: 40px;
+            position: relative;
+        }
+
+        li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #FF9E44;
+            font-weight: 700;
+            font-size: 28px;
+        }
+
+        .cta {
+            text-align: center;
+            margin-top: 48px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #FF9E44, #FFCD56);
+            color: white;
+            padding: 24px 60px;
+            border-radius: 16px;
+            font-size: 28px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 8px 24px rgba(255, 158, 68, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(255, 158, 68, 0.4);
+        }
+
+        .timeline {
+            position: relative;
+            padding: 32px 0;
+        }
+
+        .timeline-item {
+            padding: 24px;
+            margin-bottom: 24px;
+            background: #FFF5E6;
+            border-radius: 12px;
+            border-left: 6px solid #FF9E44;
+        }
+
+        .timeline-item h4 {
+            font-size: 24px;
+            color: #FF9E44;
+            margin-bottom: 12px;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 48px; }
+            h2 { font-size: 36px; }
+            h3 { font-size: 28px; }
+            p, li { font-size: 18px; }
+            .container { padding: 32px; }
+            .comparison { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Slide 1: 타이틀 -->
+    <div class="slide">
+        <div class="container">
+            <div class="emoji">🍊</div>
+            <h1>필링굿</h1>
+            <p class="subtitle">Filling Good</p>
+            <p class="tagline">나를 채우는 긍정의 습관</p>
+            <div style="text-align: center; margin-top: 48px;">
+                <p style="font-size: 28px; color: #666;">메뉴 입력 없이 이모지 터치만으로,<br>규칙적인 식습관을 만들어주는 다이어트 앱</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2: 문제 정의 -->
+    <div class="slide" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <div class="container">
+            <h2>😓 기존 다이어트 앱의 문제</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>📝 입력 피로</h4>
+                    <p>매 끼니 메뉴와 칼로리 입력<br><strong>→ 3일 내 70% 이탈</strong></p>
+                </div>
+                <div class="feature-card">
+                    <h4>🔔 알림 스트레스</h4>
+                    <p>하루 10회 이상 알림<br><strong>→ 압박감 증가</strong></p>
+                </div>
+                <div class="feature-card">
+                    <h4>😔 죄책감</h4>
+                    <p>못 먹었을 때 추궁하는 UX<br><strong>→ 부정적 경험</strong></p>
+                </div>
+                <div class="feature-card">
+                    <h4>📊 복잡한 데이터</h4>
+                    <p>칼로리, 영양소 계산<br><strong>→ 사용 포기</strong></p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 48px; padding: 32px; background: rgba(255,255,255,0.9); border-radius: 16px;">
+                <p style="font-size: 32px; color: #FF9E44; font-weight: 700;">"그냥 규칙적으로만 먹고 싶은데..."</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: 우리의 솔루션 -->
+    <div class="slide" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+        <div class="container">
+            <h2>💡 필링굿의 솔루션</h2>
+            <div class="comparison">
+                <div class="comparison-item before">
+                    <h3 style="color: #FF6B6B;">❌ 기존 앱</h3>
+                    <ul>
+                        <li style="color: #333;">메뉴 입력 (3분 소요)</li>
+                        <li style="color: #333;">칼로리 계산 필수</li>
+                        <li style="color: #333;">"못 먹었네요?"</li>
+                        <li style="color: #333;">하루 10회 이상 알림</li>
+                        <li style="color: #333;">숫자와 그래프</li>
+                    </ul>
+                </div>
+                <div class="comparison-item after">
+                    <h3 style="color: #51CF66;">✅ 필링굿</h3>
+                    <ul>
+                        <li style="color: #333;">이모지 터치 (3초 완료)</li>
+                        <li style="color: #333;">타이밍 관리 중심</li>
+                        <li style="color: #333;">"오늘도 잘 채웠어요!"</li>
+                        <li style="color: #333;">필요시에만 부드러운 안내</li>
+                        <li style="color: #333;">감성적인 이모지와 컬러</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: 5가지 채우기 -->
+    <div class="slide">
+        <div class="container">
+            <h2>🌈 5가지 채우기 시스템</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="emoji" style="font-size: 48px;">🍚</div>
+                    <h4>1. 배 채우기</h4>
+                    <p>아침/점심/저녁<br>이모지 터치로 기록</p>
+                </div>
+                <div class="feature-card">
+                    <div class="emoji" style="font-size: 48px;">💚</div>
+                    <h4>2. 마음 채우기</h4>
+                    <p>30가지 긍정 활동<br>스트레스 해소</p>
+                </div>
+                <div class="feature-card">
+                    <div class="emoji" style="font-size: 48px;">😴</div>
+                    <h4>3. 잠 채우기</h4>
+                    <p>수면 시간 기록<br>식욕 조절</p>
+                </div>
+                <div class="feature-card">
+                    <div class="emoji" style="font-size: 48px;">💧</div>
+                    <h4>4. 물 채우기</h4>
+                    <p>하루 8잔(2L)<br>수분 섭취</p>
+                </div>
+                <div class="feature-card">
+                    <div class="emoji" style="font-size: 48px;">📅</div>
+                    <h4>5. 계획 채우기</h4>
+                    <p>간식 시간 계획<br>죄책감 없이</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: 핵심 지표 -->
+    <div class="slide" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+        <div class="container">
+            <h2>📊 목표 성과 지표</h2>
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">70%</div>
+                    <div class="stat-label">3일 유지율<br>(기존 30% 대비 2배)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">40%</div>
+                    <div class="stat-label">30일 유지율<br>(기존 10% 대비 4배)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">2분</div>
+                    <div class="stat-label">일평균 사용 시간<br>(간편한 기록)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">60%</div>
+                    <div class="stat-label">일 기록 완성률<br>(지속 가능)</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 48px;">
+                <p style="font-size: 28px; color: #FF9E44; font-weight: 700;">입력 피로도 90% 감소</p>
+                <p style="font-size: 24px; color: #666; margin-top: 16px;">기존 3분 → 필링굿 3초</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: 로드맵 -->
+    <div class="slide">
+        <div class="container">
+            <h2>🚀 개발 로드맵</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>📱 Phase 1: MVP 개발 (8주)</h4>
+                    <p>5가지 채우기 핵심 기능 + 캘린더 뷰<br>Flutter 크로스플랫폼 개발</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>🎯 Phase 2: 동기 부여 강화 (4주)</h4>
+                    <p>D-Day 카운터, 달성률 시각화, 칭찬 메시지</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>📊 Phase 3: 데이터 인사이트 (지속)</h4>
+                    <p>습관 분석 리포트, 공유 기능, AI 추천</p>
+                </div>
+            </div>
+            <div class="stats" style="margin-top: 48px;">
+                <div class="stat-card">
+                    <div class="stat-number">8주</div>
+                    <div class="stat-label">MVP 개발 완료</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100명</div>
+                    <div class="stat-label">베타 테스터</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">1,000</div>
+                    <div class="stat-label">3개월 MAU 목표</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: 기술 스택 -->
+    <div class="slide" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+        <div class="container">
+            <h2>🛠️ 기술 스택</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Frontend</h4>
+                    <ul style="padding-left: 0;">
+                        <li>Flutter (크로스플랫폼)</li>
+                        <li>Provider (상태 관리)</li>
+                        <li>Lottie (애니메이션)</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>Backend</h4>
+                    <ul style="padding-left: 0;">
+                        <li>SQLite (로컬 DB)</li>
+                        <li>Firebase (클라우드 백업)</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>Design</h4>
+                    <ul style="padding-left: 0;">
+                        <li>Material Design 3</li>
+                        <li>Custom Color System</li>
+                        <li>Google Fonts (Noto Sans)</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 48px; padding: 32px; background: rgba(255,255,255,0.9); border-radius: 16px;">
+                <p style="font-size: 28px; color: #FF9E44; font-weight: 700;">Flutter로 개발 기간 50% 단축</p>
+                <p style="font-size: 24px; color: #666; margin-top: 16px;">iOS/Android 동시 개발</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: CTA -->
+    <div class="slide">
+        <div class="container" style="text-align: center;">
+            <div class="emoji">🎯</div>
+            <h1 style="margin-bottom: 32px;">필링굿</h1>
+            <p class="tagline" style="font-size: 36px; margin-bottom: 48px;">나를 채우는 긍정의 습관</p>
+
+            <div style="background: #FFF5E6; padding: 48px; border-radius: 16px; margin: 48px 0;">
+                <h3 style="color: #FF9E44; margin-bottom: 24px;">왜 필링굿인가?</h3>
+                <ul style="text-align: left; max-width: 600px; margin: 0 auto;">
+                    <li>3초 만에 기록 완료 (입력 피로 90% 감소)</li>
+                    <li>70% 유지율 (기존 앱 대비 2배)</li>
+                    <li>과학적 접근 (다이어트 실패 5대 요인 해결)</li>
+                    <li>감성적 UX (MZ세대 선호 디자인)</li>
+                    <li>빠른 출시 (8주 내 MVP 완성)</li>
+                </ul>
+            </div>
+
+            <div class="cta">
+                <p style="font-size: 28px; margin-bottom: 32px;">지금 바로 시작하세요</p>
+                <a href="#" class="cta-button">필링굿 시작하기</a>
+            </div>
+
+            <div style="margin-top: 64px; padding-top: 32px; border-top: 2px solid #eee;">
+                <p style="font-size: 20px; color: #999;">필링굿 팀 | 2025.11</p>
+                <p style="font-size: 18px; color: #bbb; margin-top: 8px;">버전 1.0.0</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 키보드 네비게이션
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                if (currentSlide < slides.length - 1) {
+                    currentSlide++;
+                    slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+                }
+            } else if (e.key === 'ArrowLeft') {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+                }
+            } else if (e.key === 'Home') {
+                currentSlide = 0;
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            } else if (e.key === 'End') {
+                currentSlide = slides.length - 1;
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+
+        // 슬라이드 인디케이터 추가
+        const indicator = document.createElement('div');
+        indicator.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 24px;
+            font-size: 16px;
+            z-index: 1000;
+        `;
+        document.body.appendChild(indicator);
+
+        function updateIndicator() {
+            indicator.textContent = `${currentSlide + 1} / ${slides.length}`;
+        }
+
+        updateIndicator();
+
+        // 스크롤 감지
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                slides.forEach((slide, index) => {
+                    const rect = slide.getBoundingClientRect();
+                    if (rect.top >= 0 && rect.top < window.innerHeight / 2) {
+                        currentSlide = index;
+                        updateIndicator();
+                    }
+                });
+            }, 100);
+        });
+    </script>
+</body>
+</html>
